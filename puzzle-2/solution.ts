@@ -26,6 +26,8 @@ function readPasswordLines(fname: string): string[] {
 }
 
 function parseLine(line: string): (Validator | null) {
+    // Sample Line 
+    // 6-11 c: dccxcccccchrcfdckcsc
     const re = /(\d+)-(\d+)\s(\w{1}):\s(\w+)$/
     const match = re.exec(line)
     if (match) {
