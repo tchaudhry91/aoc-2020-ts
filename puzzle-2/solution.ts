@@ -18,6 +18,16 @@ class Validator {
         }
         return true
     }
+
+    validateNewPolicy(): boolean {
+        if ((this.password.charAt(this.minCheck - 1) === this.charCheck) || this.password.charAt(this.maxCheck - 1) === this.charCheck) {
+            if (this.password.charAt(this.minCheck - 1) === this.password.charAt(this.maxCheck - 1)) {
+                return false
+            }
+            return true
+        }
+        return false
+    }
 }
 
 function readPasswordLines(fname: string): string[] {
@@ -48,11 +58,15 @@ function countChars(password: string, charCheck: string): number {
 }
 
 let total = 0;
+let totalNewPolicy = 0;
 const lines = readPasswordLines("input")
 for (const l of lines) {
     const v = parseLine(l)
     if (v?.validate()) {
         total += 1
     }
+    if (v?.validateNewPolicy()) {
+        totalNewPolicy += 1
+    }
 }
-console.log(total);
+console.log(`New Policy: ${totalNewPolicy}, OldPolicy: ${total}`)
