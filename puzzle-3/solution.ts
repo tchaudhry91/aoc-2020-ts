@@ -9,9 +9,15 @@ function getMap(fname: string): string[] {
     return cleanedLines;
 }
 function countTreeHits(map: string[], slope: number): number {
+    let yIncrement = 1;
+    let xIncrement = slope;
+    if (slope < 1) {
+        yIncrement = (1 / slope);
+        xIncrement = 1;
+    }
     let hits = 0;
     let x = 0;
-    for (let y = 0; y < map.length; y++, x += slope) {
+    for (let y = 0; y < map.length; y += yIncrement, x += xIncrement) {
         if (map[y].charAt(x % map[y].length) === "#") {
             hits++;
         }
@@ -22,5 +28,17 @@ function countTreeHits(map: string[], slope: number): number {
 
 
 const map = getMap("input");
-let hits = countTreeHits(map, 3);
-console.log(hits);
+const hits = countTreeHits(map, 3);
+console.log(`Total Hits: ${hits}`);
+
+// Check Some More Slopes
+let mul = 1;
+const slopes = [1, 3, 5, 7, 0.5];
+
+for (const s of slopes) {
+    const temp = countTreeHits(map, s);
+    console.log(`Total Hits on ${s} slope is ${temp}`);
+    mul *= temp;
+}
+
+console.log(`Multiplication is ${mul}`)
